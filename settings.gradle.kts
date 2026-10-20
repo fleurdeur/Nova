@@ -22,6 +22,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "NovaFX"
+rootProject.name = "Alight Motion"
 
 include(":app")

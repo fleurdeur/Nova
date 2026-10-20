@@ -32,6 +32,15 @@ object ProjectStore {
         return id
     }
 
+    fun createWithPreset(c: Context, name: String, w: Int, h: Int, fps: Int, setup: (Project) -> Unit): String {
+        val id = newId()
+        val p = Project(w, h, fps)
+        setup(p)
+        ProjectIO.save(p, file(c, id))
+        writeMeta(c, id, name, w, h, fps, p.layers.size)
+        return id
+    }
+
     fun rename(c: Context, id: String, name: String) {
         meta(c, id)?.let { writeMeta(c, id, name, it.w, it.h, it.fps, it.layers) }
     }

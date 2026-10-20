@@ -193,6 +193,7 @@ void main() {
     }
 
     fun draw(p: Project, t: Long) {
+        val startNs = System.nanoTime()
         GL.glClearColor(0.04f, 0.04f, 0.06f, 1f)
         GL.glClear(GL.GL_COLOR_BUFFER_BIT)
         GL.glBindVertexArray(tools.vao)
@@ -363,6 +364,7 @@ void main() {
             }
             GL.glDrawArrays(GL.GL_TRIANGLE_STRIP, 0, 4)
         }
+        com.nova.fx.vulkan.VulkanEngine.recordFrame(System.nanoTime() - startNs, p.width >= 3840 || p.height >= 3840)
     }
 
     private fun drawParticles(l: Layer, s: Source.Particles, t: Long, a: Float) {

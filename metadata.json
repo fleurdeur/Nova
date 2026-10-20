@@ -1,6 +1,6 @@
 {
-  "name": "NovaFX",
-  "description": "Professional video and motion graphics editor with GPU-accelerated 4K rendering, multi-layer timeline, customizable keyframe curves, 3D LUTs, and After Effects motion effects.",
+  "name": "Alight Motion",
+  "description": "Professional motion design, video editing, and visual effects editor featuring GPU-accelerated 4K rendering, multi-layer timeline, customizable keyframe curves, 3D LUTs, and After Effects motion tools with zero watermark.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

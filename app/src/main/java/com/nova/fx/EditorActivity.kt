@@ -162,6 +162,9 @@ class EditorActivity : Activity() {
         resBadge = Ui.badge(this, "${st.project.width}p ${st.project.fps}fps", Ui.ACCENT_CYAN).apply {
             setOnClickListener { canvasDialog() }
         }
+        val vulkanBadge = Ui.badge(this, "⚡ Vulkan 4K", Ui.ACCENT_VIOLET).apply {
+            setOnClickListener { showVulkanReport() }
+        }
         val noWatermarkBadge = Ui.badge(this, "No Watermark", Ui.SUCCESS_GREEN)
 
         val top = LinearLayout(this).apply {
@@ -175,8 +178,11 @@ class EditorActivity : Activity() {
                 addView(titleView)
                 val badgeRow = LinearLayout(this@EditorActivity).apply {
                     gravity = Gravity.CENTER
+                    addView(vulkanBadge)
+                    val sp0 = View(this@EditorActivity).apply { layoutParams = LinearLayout.LayoutParams(d(4f), 1) }
+                    addView(sp0)
                     addView(resBadge)
-                    val space = View(this@EditorActivity).apply { layoutParams = LinearLayout.LayoutParams(d(6f), 1) }
+                    val space = View(this@EditorActivity).apply { layoutParams = LinearLayout.LayoutParams(d(4f), 1) }
                     addView(space)
                     addView(noWatermarkBadge)
                 }
@@ -228,7 +234,8 @@ class EditorActivity : Activity() {
             v.background = Ui.round(this, if (on) Ui.accent() else Ui.CHIP, 10f)
         }
 
-        add("＋ Add") { addLayerDialog() }
+        add("＋ Add Layer") { addLayerDialog() }
+        add("📦 Assets") { assetStoreDialog() }
         add("Transform") { transformDialog() }
         add("📈 Curves & Keys") { curveDialog() }
         add("🎨 Color & LUTs") { colorGradingDialog() }
@@ -644,6 +651,48 @@ class EditorActivity : Activity() {
                     ))
                 }
             }.show()
+    }
+
+    private fun showVulkanReport() {
+        val report = com.nova.fx.vulkan.VulkanEngine.getPerformanceReport(this)
+        AlertDialog.Builder(this)
+            .setTitle("Vulkan & Mali-G52 Telemetry")
+            .setMessage(report)
+            .setPositiveButton("Done", null)
+            .show()
+    }
+
+    private fun assetStoreDialog() {
+        val assets = com.nova.fx.model.AssetStore.assets
+        val labels = assets.map { "${it.icon}  ${it.name} (${it.badge})" }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle("Keyflow Asset Store")
+            .setItems(labels) { _, idx ->
+                val asset = assets[idx]
+                val l = st.selected
+                if (asset.applyToLayer != null) {
+                    if (l != null) {
+                        gl { asset.applyToLayer.invoke(l, st.project) }
+                        timeline.invalidate()
+                        Toast.makeText(this, "Applied ${asset.name} to ${l.name}", Toast.LENGTH_SHORT).show()
+                    } else if (asset.category == com.nova.fx.model.AssetStore.Category.PARTICLES) {
+                        val pLayer = LayerFactory.particles(nextId++, 0, st.project).apply {
+                            name = asset.name
+                        }
+                        addLayer(pLayer)
+                        Toast.makeText(this, "Added ${asset.name} layer", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Select a layer to apply ${asset.name}", Toast.LENGTH_SHORT).show()
+                    }
+                } else if (asset.category == com.nova.fx.model.AssetStore.Category.TITLES) {
+                    addLayer(LayerFactory.text(nextId++, asset.name, st.project))
+                    Toast.makeText(this, "Added ${asset.name} text layer", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "${asset.name}: ${asset.description}", Toast.LENGTH_LONG).show()
+                }
+            }
+            .setNegativeButton("Close", null)
+            .show()
     }
 
     private fun effectsDialog() {

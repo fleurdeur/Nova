@@ -18,7 +18,7 @@ class CurveView(c: Context) : View(c) {
     private var drag = -1
 
     private val curvePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = 0xFF00E5FF.toInt() // Neon cyan curve
+        color = 0xFF00DF82.toInt() // Alight Motion Emerald Green curve
         style = Paint.Style.STROKE
         strokeWidth = 3.5f * dp
     }
@@ -28,7 +28,7 @@ class CurveView(c: Context) : View(c) {
         strokeWidth = 1f * dp
     }
     private val armPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = 0xFF7C4DFF.toInt() // Violet handle arms
+        color = 0xFF00DF82.toInt() // Alight Motion Green handle arms
         style = Paint.Style.STROKE
         strokeWidth = 2f * dp
     }
@@ -37,7 +37,7 @@ class CurveView(c: Context) : View(c) {
         style = Paint.Style.FILL
     }
     private val handleStroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = 0xFF7C4DFF.toInt()
+        color = 0xFF00DF82.toInt()
         style = Paint.Style.STROKE
         strokeWidth = 3f * dp
     }

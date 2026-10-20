@@ -46,7 +46,7 @@ class TimelineView(c: Context, private val st: EditorState, private val onChange
     }
     private val selPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        color = 0xFF00E5FF.toInt() // Neon cyan selection border
+        color = 0xFF00DF82.toInt() // Alight Motion Emerald Green selection border
         strokeWidth = 2.5f * dp
     }
     private val keyframePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {

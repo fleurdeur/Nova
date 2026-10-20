@@ -33,6 +33,17 @@ object Prefs {
         get() = i("defFps", 30)
         set(v) = put("defFps", v)
 
+    // Graphics API & Vulkan Hardware Engine
+    var graphicsApi: Int // 0=Vulkan 1.1 (Mali TBDR Subpasses), 1=OpenGL ES 3.0
+        get() = i("gfxApi", 0)
+        set(v) = put("gfxApi", v)
+    var vulkanSubpasses: Boolean
+        get() = b("vkSubpasses", true)
+        set(v) = put("vkSubpasses", v)
+    var vulkanPipelineCache: Boolean
+        get() = b("vkPipeCache", true)
+        set(v) = put("vkPipeCache", v)
+
     // Preview / Performance Tuning for Mali-G52
     var previewRes: Int // short-side cap in px (0 = full canvas)
         get() = i("previewRes", 540)
